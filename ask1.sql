@@ -39,4 +39,15 @@ FROM Customers c
 INNER JOIN Employees e ON c.City = e.City 
     AND SUBSTR(c.Address, 1, 1) = SUBSTR(e.Address, 1, 1);
 
+-- 5.
+SELECT 
+    c.City,
+    strftime('%m', o.OrderDate) AS MHNAS,
+    SUM(od.UnitPrice * od.Quantity) AS CityCost,
+    COUNT(DISTINCT o.OrderID) AS Paraggelies
+FROM Orders o
+INNER JOIN Customers c ON o.CustomerID = c.CustomerID
+INNER JOIN "Order Details" od ON o.OrderID = od.OrderID
+GROUP BY c.City, MHNAS
+ORDER BY c.City ASC, MHNAS ASC;
 
