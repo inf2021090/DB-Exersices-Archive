@@ -27,5 +27,16 @@ GROUP BY o.OrderID, c.CompanyName
 ORDER BY OrderCost DESC
 LIMIT 15;
 
-    
+-- 4.
+SELECT 
+    c.CustomerID,
+    c.CompanyName,
+    c.Address,
+    e.EmployeeID,
+    e.LastName,
+    e.Address
+FROM Customers c
+INNER JOIN Employees e ON c.City = e.City 
+    AND SUBSTR(c.Address, 1, 1) = SUBSTR(e.Address, 1, 1);
+
 
