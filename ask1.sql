@@ -51,3 +51,21 @@ INNER JOIN "Order Details" od ON o.OrderID = od.OrderID
 GROUP BY c.City, MHNAS
 ORDER BY c.City ASC, MHNAS ASC;
 
+-- 6.
+SELECT 
+    temp.MHNAS,
+    MAX(temp.Cost) AS OrderCost
+FROM (
+    SELECT 
+        o.OrderID,
+        STRFTIME('%m', o.OrderDate) AS MHNAS,
+        SUM(od.UnitPrice * od.Quantity) AS Cost
+    FROM Orders o, "Order Details" od
+    WHERE o.OrderID = od.OrderID
+      AND STRFTIME('%Y', o.OrderDate) = '1997'
+    GROUP BY o.OrderID, MHNAS
+) AS temp
+GROUP BY temp.MHNAS
+ORDER BY SUM(temp.Cost) DESC
+LIMIT 3;
+
